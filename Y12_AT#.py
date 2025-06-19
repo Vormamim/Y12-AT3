@@ -114,4 +114,47 @@ def calculations() :
         sum_label.pack(side="left")
 
         current_row_2 += 1  # Increment the row counter for the next label 
-print("I LOVE GITHUB")
+    
+
+    
+
+
+
+### MAIN MASTER PROGRAM ###
+
+app = ctk.CTk()
+app.geometry("1000x900")
+app.title("Student Marks Program")
+
+title_label = ctk.CTkLabel(app, text="Student Marks Program 📚", font=("Calibri", 28, "bold"))
+title_label.pack(pady=(20, 10))
+
+# Button row (all buttons in one horizontal frame)
+button_frame = ctk.CTkFrame(app)
+button_frame.pack(pady=10)
+
+button_add_row = ctk.CTkButton(button_frame, text="Add name & mark", command=add_entry_row, font=("Calibri", 16))
+button_add_row.pack(side="left", padx=5)
+
+button_run = ctk.CTkButton(button_frame, text="Show frequency histogram", command=get_entries, font=("Calibri", 16))
+button_run.pack(side="left", padx=5)
+
+extra_button = ctk.CTkButton(button_frame, text="Show individual marks", command=extra_graph, font=("Calibri", 16))
+extra_button.pack(side="left", padx=5)
+
+calc_button = ctk.CTkButton(button_frame, text="Calculate Z-scores", command=calculations, font=("Calibri", 16))
+calc_button.pack(side="left", padx=5)
+
+# Scrollable frame for entry rows
+scrollable_frame = ctk.CTkScrollableFrame(app)
+scrollable_frame.pack(pady=20, padx=20, fill="both", expand=True)
+
+# Scrollable frame for results (z-scores, etc.)
+scrollable_frame_2 = ctk.CTkScrollableFrame(app)
+scrollable_frame_2.pack(pady=20, padx=20, fill="both", expand=True)
+
+# If you had a dict_label or other result widgets, pack them here as well
+# dict_label = ctk.CTkLabel(app, text="")
+# dict_label.pack(pady=(10, 10))
+
+app.mainloop()
