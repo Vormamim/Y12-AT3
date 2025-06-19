@@ -1,6 +1,8 @@
 import customtkinter as ctk
 import numpy as np
-import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt 
+from matplotlib.figure import Figure
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
 
 # Set appearance and color theme
 ctk.set_appearance_mode("light") 
@@ -66,8 +68,7 @@ def run() :
     plt.xlabel("Value")
     plt.ylabel("Frequency")
     plt.legend()
-    plt.show()     
-    calculations()
+    calculations() 
 
 def extra_graph() : 
     global values 
