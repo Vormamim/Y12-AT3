@@ -45,67 +45,38 @@ def add_entry_row(): # Adds a row for name and marks simulatenously on the left 
 
 def get_entries(): 
     global values
-    marks = []
-    for entry in text_boxes:
-        raw = entry.get()
-    # Split by comma or space, filter out empty, convert to int
-        parts = [x for x in raw.replace(',', ' ').split() if x.strip()]
-        nums = [int(x) for x in parts]
-        if nums:
-            avg = sum(nums) / len(nums)
-            marks.append(avg)
-        else:
-            marks.append(0)
+    raw_values = [entry.get() for entry in text_boxes]  # Retrieve values in the list for marks  
+    values  = [int(x) for x in raw_values] # Makes them all integers to be used in the graph
     run()
 
 def run() :   
+    plt.clf() # Clears any current graph 
     global values
-    # Extract and average marks for each student
-    marks = []
-    for entry in text_boxes:
-        raw = entry.get()
-        parts = [x for x in raw.replace(',', ' ').split() if x.strip()]
-        nums = [int(x) for x in parts]
-        if nums:
-            avg = sum(nums) / len(nums)
-            marks.append(avg)
-        else:
-            marks.append(0)
-    values = marks
+   
+    counts, bins, patches = plt.hist(values, bins=10, color="skyblue", edgecolor="black", alpha=0.7)  # Plots histogram with an array for counts, bins and patches
+    
+   
+    bin_centers = 0.5 * (bins[1:] + bins[:-1])  # Calculate bin centers for the polygon
 
-    plt.clf()
-    counts, bins, patches = plt.hist(values, bins=10, color="skyblue", edgecolor="black", alpha=0.7)
-    bin_centers = 0.5 * (bins[1:] + bins[:-1])
+    # Exclude bins with 0 frequency
     filtered_centers = [center for center, count in zip(bin_centers, counts) if count > 0]
     filtered_counts = [count for count in counts if count > 0]
+
+    # Plot frequency polygon only for non-zero frequencies
     plt.plot(filtered_centers, filtered_counts, color="red", marker="o", linestyle="-", linewidth=2, label="Frequency Polygon")
     plt.title("Histogram with Frequency Polygon")
     plt.xlabel("Value")
     plt.ylabel("Frequency")
     plt.legend()
-    plt.show()
-    calculations()
+    calculations() 
 
 def extra_graph() : 
     global values 
     global text_boxes  
-    names = [entry.get() for entry in name_boxes]
-    marks = []
-    for entry in text_boxes:
-        raw = entry.get()
-        parts = [x for x in raw.replace(',', ' ').split() if x.strip()]
-        nums = [int(x) for x in parts]
-        if nums:
-            avg = sum(nums) / len(nums)
-            marks.append(avg)
-        else:
-            marks.append(0)
-    values = marks
     plt.clf()
-    plt.bar(names, values, color="skyblue", edgecolor="black")
-    plt.title("Average Marks per Student")
-    plt.xlabel("Student")
-    plt.ylabel("Average Mark")
+    names = [entry.get() for entry in name_boxes]  # Extract names from name_boxes
+    marks = [int(entry.get()) for entry in text_boxes]  # Extract marks from text_boxes
+    plt.bar(names, marks, color="skyblue", edgecolor="black")  # Create bar chart
     plt.show()
 
 def calculations() :   
@@ -113,20 +84,11 @@ def calculations() :
     global names  
     global marks 
     names = [entry.get() for entry in name_boxes]  # Extract names from name_boxes
-    marks = []
-    for entry in text_boxes:
-        raw = entry.get()
-        parts = [x for x in raw.replace(',', ' ').split() if x.strip()]
-        nums = [int(x) for x in parts]
-        if nums:
-            avg = sum(nums) / len(nums)
-            marks.append(avg)
-        else:
-            marks.append(0)
+    marks = [int(entry.get()) for entry in text_boxes]  # Extract marks from text_boxes
     data = np.array(marks) 
     mean = np.mean(data) 
     std_dev = np.std(data) 
-    z_scores = [round(x, 3) for x in ((data - mean)/ std_dev)] if std_dev != 0 else [0 for _ in data]
+    z_scores = [round(x, 3) for x in ((data - mean)/ std_dev)]
     row_frame_2 = ctk.CTkFrame(scrollable_frame_2)   
     row_frame_2.grid(row=current_row_2, column=0, columnspan=2, padx=10, pady=5)  # Create a new frame for the Z-scores
     for i in range(len(names)): 
@@ -134,7 +96,7 @@ def calculations() :
     for key, value in dict.items():
         item_frame = ctk.CTkFrame(row_frame_2)
         item_frame.pack(fill="x", pady=(5,2))
-        label = ctk.CTkLabel(item_frame, text=f"{key}: {value} (avg)", font=("Calibri", 16))
+        label = ctk.CTkLabel(item_frame, text=f"{key}: {value}", font=("Calibri", 16))
         label.pack(side="left", padx=(0,10))
         if value > 0 and value < 1:
             sum_label = ctk.CTkLabel(item_frame, text="🟢✨ Good", font=("Segoe UI Emoji", 16), width=100) 
@@ -196,4 +158,5 @@ scrollable_frame_2.pack(pady=20, padx=20, fill="both", expand=True)
 # dict_label = ctk.CTkLabel(app, text="")
 # dict_label.pack(pady=(10, 10))
 
-app.mainloop()
+app.mainloop() 
+print("warmo")
