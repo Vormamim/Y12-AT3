@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 ctk.set_appearance_mode("light")
-ctk.set_default_color_theme("green")
+ctk.set_default_color_theme("red")
 
 class SubjectTab:
     def __init__(self, parent, subject_name):
