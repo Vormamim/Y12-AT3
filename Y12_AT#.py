@@ -30,6 +30,10 @@ def sign_up():
     def confirm_signup():
         saved_username = username.get()
         saved_password = password.get()
+        if not saved_username or not saved_password:
+            label = ctk.CTkLabel(app, text="Username and password cannot be empty.", font=("Arial", 16), text_color="red")
+            label.pack(pady=(10, 20))
+            return
         with open("data.json", "r") as f:
             data = json.load(f)
         if saved_username in data:
@@ -58,10 +62,14 @@ def login():
     def confirm_login():
         login_username = username.get()
         login_password = password.get()
+        if not login_username or not login_password:
+            label = ctk.CTkLabel(app, text="Username and password cannot be empty.", font=("Arial", 16), text_color="red")
+            label.pack(pady=(10, 20))
+            return
         with open("data.json", "r") as f:
             data = json.load(f)
         if login_username in data and data[login_username] == login_password:
-            launch_marks_program()
+            master_program()
         else:
             label = ctk.CTkLabel(app, text="Invalid username or password. Please try again.", font=("Arial", 16), text_color="red")
             label.pack(pady=(10, 20))
@@ -72,7 +80,7 @@ def login():
     signup = ctk.CTkButton(app, text="Sign Up", width=200, height=40, font=("Arial", 16), command=sign_up)
     signup.pack(pady=(10, 20))
 
-def launch_marks_program():
+def master_program():
     clear_window()
 
     title_label = ctk.CTkLabel(app, text="Student Marks Program 📚", font=("Calibri", 28, "bold"))
@@ -96,13 +104,14 @@ def launch_marks_program():
             self.subject_name = subject_name
             self.text_boxes = []
             self.name_boxes = []
-            self.current_row = 0
             self.values = []
             self.data_dict = {}
 
             # Frame for entry rows
             self.scrollable_frame = ctk.CTkScrollableFrame(parent)
-            self.scrollable_frame.pack(pady=10, padx=10, fill="both", expand=True)
+            self.scrollable_frame.pack(pady=10, padx=10, fill="both", expand=True) 
+
+
 
             # Frame for results
             self.scrollable_frame_2 = ctk.CTkScrollableFrame(parent)
@@ -126,7 +135,7 @@ def launch_marks_program():
 
         def add_entry_row(self):
             row_frame = ctk.CTkFrame(self.scrollable_frame)
-            row_frame.grid(row=self.current_row, column=0, columnspan=2, padx=10, pady=5)
+            row_frame.pack(padx=10, pady=5, fill="x")
 
             nametext = ctk.CTkEntry(row_frame, width=200)
             nametext.pack(side="left", padx=(0, 10))
@@ -145,11 +154,22 @@ def launch_marks_program():
 
             self.name_boxes.append(nametext)
             self.text_boxes.append(newtext)
-            self.current_row += 1
+ 
 
         def get_entries(self):
             self.values = []
-            marks = []
+            marks = [] 
+            if not self.name_boxes or not self.text_boxes: 
+                error_msg = ctk.CTkLabel(self.scrollable_frame, text="Please add at least one name and mark entry.", text_color="red", font=("Calibri", 16)) 
+                error_msg.pack(pady=(10, 0))
+                return    
+            error_check = [entry.get() for entry in self.name_boxes + self.text_boxes] 
+            for entry in error_check: 
+                if not entry.strip(): 
+                    error_msg = ctk.CTkLabel(self.scrollable_frame, text="All fields must be filled out.", text_color="red", font=("Calibri", 16)) 
+                    error_msg.pack(pady=(10, 0))
+                    return
+            print(self.name_boxes)
             for entry in self.text_boxes:
                 raw = entry.get()
                 parts = [x for x in raw.replace(',', ' ').split() if x.strip()]
@@ -159,8 +179,9 @@ def launch_marks_program():
                     marks.append(avg)
                 else:
                     marks.append(0)
-            self.values = marks
-            self.run()
+            self.values = marks 
+            self.run() 
+            self.calculations()
 
         def run(self):
             plt.clf()
@@ -174,7 +195,7 @@ def launch_marks_program():
             plt.ylabel("Frequency")
             plt.legend()
             plt.show()
-            self.calculations()
+            
 
         def extra_graph(self):
             names = [entry.get() for entry in self.name_boxes]
