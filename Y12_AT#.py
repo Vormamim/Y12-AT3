@@ -100,7 +100,7 @@ def master_program():
     '''Main function that houses everything'''
     clear_window() # clears singup and login
 
-    title_label = ctk.CTkLabel(app, text="Student Marks Program 📚", font=("Calibri", 28, "bold"))
+    title_label = ctk.CTkLabel(app, text="Student Dashboard Manager 📚", font=("Calibri", 28, "bold"))
     title_label.pack(pady=(20, 10))
 
     # Subject input
@@ -313,7 +313,7 @@ def master_program():
         if subject and subject not in subject_tabs: # Adds to list if doesnt already exsisted
             tabview.add(subject) # Adds to the top of the tabs
             subject_tabs[subject] = SubjectTab(tabview.tab(subject), subject) # creates a new instance of the class with the subject
-            subject_entry.delete(0, "end")
+            subject_entry.delete(0, "end")  # empties the entry box after adding the subject
 
     add_subject_button = ctk.CTkButton(subject_entry_frame, text="Add Subject", command=add_subject)
     add_subject_button.pack(side="left")
