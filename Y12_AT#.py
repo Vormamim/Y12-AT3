@@ -233,7 +233,7 @@ def master_program():
 
         def extra_graph(self):
             names = [entry.get() for entry in self.name_boxes] # creats a list for names
-            marks = # list for marks for the bar graph (seperate from frequency histogram) 
+            marks = [] # list for marks for the bar graph (seperate from frequency histogram) 
             ## SAME STRIPPING AND AVERAGING FORMULA AS BEFFORE ##
             for entry in self.text_boxes:
                 raw = entry.get()
@@ -278,32 +278,32 @@ def master_program():
             for i in range(len(names)): 
                 # for the ammount of names inputted
                 self.data_dict[names[i]] = z_scores[i] # add that name and it's z score to the dictionary 
-            for i, (key, value) in enumerate(self.data_dict.items()):
-                item_frame = ctk.CTkFrame(self.scrollable_frame_2)
+            for key, value in self.data_dict.items(): # for each name and mark in the dictionary
+                for x in marks: ## creates a new frame for each students performance
+                    item_frame = ctk.CTkFrame(self.scrollable_frame_2)
                 item_frame.pack(fill="x", pady=(5,2))
-                avg_mark = marks[i]
-                label = ctk.CTkLabel(item_frame, text=f"{key}: {value} (z-score), avg: {avg_mark:.2f}", font=("Calibri", 16))
+                label = ctk.CTkLabel(item_frame, text=f"{key}: {value} (avg)", font=("Calibri", 16))
                 label.pack(side="left", padx=(0,10)) 
                 ## Classifies a students performance based on z scores. Z scores that are more negative are mor below the mean and z scores that are more positive values
                 if value >= 2: 
-                    sum_label = ctk.CTkLabel(item_frame, text=f"🌟 Top Performer (≥ +2σ) with score {x}", font=("Segoe UI Emoji", 16), width=150)
+                    sum_label = ctk.CTkLabel(item_frame, text=f"🌟 Top Performer (≥ +2σ)", font=("Segoe UI Emoji", 16), width=150)
                 elif value >= 1.5:
-                    sum_label = ctk.CTkLabel(item_frame, text=f"🟢 Excellent (+1.5σ to +2σ) with score {x}", font=("Segoe UI Emoji", 16), width=150)
+                    sum_label = ctk.CTkLabel(item_frame, text=f"🟢 Excellent (+1.5σ to +2σ)", font=("Segoe UI Emoji", 16), width=150)
                 elif value >= 1:
-                    sum_label = ctk.CTkLabel(item_frame, text=f"🟢 Very Good (+1σ to +1.5σ) with score {x}", font=("Segoe UI Emoji", 16), width=150)
+                    sum_label = ctk.CTkLabel(item_frame, text=f"🟢 Very Good (+1σ to +1.5σ)", font=("Segoe UI Emoji", 16), width=150)
                 elif value >= 0.5:
-                    sum_label = ctk.CTkLabel(item_frame, text=f"🟢 Above Average (+0.5σ to 1σ) with score {x}", font=("Segoe UI Emoji", 16), width=150)
-                    sum_label = ctk.CTkLabel(item_frame, text=f"🟡 Average (0 to +0.5σ) with score {x}", font=("Segoe UI Emoji", 16), width=150)
+                    sum_label = ctk.CTkLabel(item_frame, text=f"🟢 Above Average (+0.5σ to 1σ)", font=("Segoe UI Emoji", 16), width=150)
+                    sum_label = ctk.CTkLabel(item_frame, text=f"🟡 Average (0 to +0.5σ)", font=("Segoe UI Emoji", 16), width=150)
                 elif value >= -0.5:
-                    sum_label = ctk.CTkLabel(item_frame, text=f"🟡 Slightly Below Average (-0.5σ to 0) with score {x}", font=("Segoe UI Emoji", 16), width=150)
+                    sum_label = ctk.CTkLabel(item_frame, text=f"🟡 Slightly Below Average (-0.5σ)", font=("Segoe UI Emoji", 16), width=150)
                 elif value >= -1:
-                    sum_label = ctk.CTkLabel(item_frame, text=f"🟠 Below Average (-1σ to -0.5σ) with score {x}", font=("Segoe UI Emoji", 16), width=150)
+                    sum_label = ctk.CTkLabel(item_frame, text=f"🟠 Below Average (-1σ to -0.5σ)", font=("Segoe UI Emoji", 16), width=150)
                 elif value >= -1.5:
-                    sum_label = ctk.CTkLabel(item_frame, text=f"🔴 Needs Improvement (-1.5σ to -1σ) with score {x}", font=("Segoe UI Emoji", 16), width=150)
+                    sum_label = ctk.CTkLabel(item_frame, text=f"🔴 Needs Improvement (-1.5σ to -1σ) ", font=("Segoe UI Emoji", 16), width=150)
                 elif value >= -2:
-                    sum_label = ctk.CTkLabel(item_frame, text=f"🔴 Poor (-2σ to -1.5σ) with score {x}", font=("Segoe UI Emoji", 16), width=150)
+                    sum_label = ctk.CTkLabel(item_frame, text=f"🔴 Poor (-2σ to -1.5σ) ", font=("Segoe UI Emoji", 16), width=150)
                 else:
-                    sum_label = ctk.CTkLabel(item_frame, text=f"🔴 Very Poor (< -2σ) with score {x}", font=("Segoe UI Emoji", 16), width=150)
+                    sum_label = ctk.CTkLabel(item_frame, text=f"🔴 Very Poor (< -2σ)", font=("Segoe UI Emoji", 16), width=150)
                 sum_label.pack(side="left")   
            
                            
