@@ -14,5 +14,9 @@ The system created allows users to enter student names and their marks for each 
 ## Features 
 - Add multiple marks per mark text box (e.g "Mark" : "70, 80") to forumulate an average for that student
 - Graphs a frequency histogram of the data and a bar graph when "Show frequency histogram" is pressed and "Show individual marks" is pressed
-- A performance summary is shown when "Calculate Performance" 
+- A performance summary is shown when "Calculate Performance" is pressed
+
+## Imports 
+- Run the requirements txt file in the terminal to add all libraries 
+- If that does not work, download each library manually in the VS code terminal (e.g pip install matplotlib)
 
